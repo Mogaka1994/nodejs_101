@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to nodejs application." });
 });
 
-require("./app/routes/customer.routes.js")(app);
+require("./app/routes/customer.routes.js").default(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;

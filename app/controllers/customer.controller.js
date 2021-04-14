@@ -1,7 +1,7 @@
-const Customer = require("../models/customer.model.js");
+import Customer from "../models/customer.model.js";
 
 // Create and Save a new Customer
-exports.create = (req, res) => {
+export function create(req, res) {
   // Validate request
   if (!req.body) {
     res.status(400).send({
@@ -25,10 +25,10 @@ exports.create = (req, res) => {
       });
     else res.send(data);
   });
-};
+}
 
 // Retrieve all Customers from the database.
-exports.findAll = (req, res) => {
+export function findAll(req, res) {
   Customer.getAll((err, data) => {
     if (err)
       res.status(500).send({
@@ -37,10 +37,10 @@ exports.findAll = (req, res) => {
       });
     else res.send(data);
   });
-};
+}
 
 // Find a single Customer with a customerId
-exports.findOne = (req, res) => {
+export function findOne(req, res) {
   Customer.findById(req.params.customerId, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
@@ -54,10 +54,10 @@ exports.findOne = (req, res) => {
       }
     } else res.send(data);
   });
-};
+}
 
 // Update a Customer identified by the customerId in the request
-exports.update = (req, res) => {
+export function update(req, res) {
   // Validate Request
   if (!req.body) {
     res.status(400).send({
@@ -84,10 +84,10 @@ exports.update = (req, res) => {
       } else res.send(data);
     }
   );
-};
+}
 
 // Delete a Customer with the specified customerId in the request
-exports.delete = (req, res) => {
+const _delete = (req, res) => {
   Customer.remove(req.params.customerId, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
@@ -99,12 +99,14 @@ exports.delete = (req, res) => {
           message: "Could not delete Customer with id " + req.params.customerId
         });
       }
-    } else res.send({ message: `Customer was deleted successfully!` });
+    } else
+      res.send({ message: `Customer was deleted successfully!` });
   });
 };
+export { _delete as delete };
 
 // Delete all Customers from the database.
-exports.deleteAll = (req, res) => {
+export function deleteAll(req, res) {
   Customer.removeAll((err, data) => {
     if (err)
       res.status(500).send({
@@ -113,4 +115,4 @@ exports.deleteAll = (req, res) => {
       });
     else res.send({ message: `All Customers were deleted successfully!` });
   });
-};
+}

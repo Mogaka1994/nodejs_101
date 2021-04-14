@@ -1,4 +1,4 @@
-module.exports = app => {
+export default app => {
   const customers = require("../controllers/customer.controller.js");
 
   // Create a new Customer

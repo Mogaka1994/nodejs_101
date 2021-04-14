@@ -1,4 +1,4 @@
-const sql = require("./db.js");
+import { query } from "./db.js";
 
 // constructor
 const Customer = function(customer) {
@@ -8,7 +8,7 @@ const Customer = function(customer) {
 };
 
 Customer.create = (newCustomer, result) => {
-  sql.query("INSERT INTO customers SET ?", newCustomer, (err, res) => {
+  query("INSERT INTO customers SET ?", newCustomer, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -21,7 +21,7 @@ Customer.create = (newCustomer, result) => {
 };
 
 Customer.findById = (customerId, result) => {
-  sql.query(`SELECT * FROM customers WHERE id = ${customerId}`, (err, res) => {
+  query(`SELECT * FROM customers WHERE id = ${customerId}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -39,7 +39,7 @@ Customer.findById = (customerId, result) => {
 };
 
 Customer.getAll = result => {
-  sql.query("SELECT * FROM customers", (err, res) => {
+  query("SELECT * FROM customers", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -52,7 +52,7 @@ Customer.getAll = result => {
 };
 
 Customer.updateById = (id, customer, result) => {
-  sql.query(
+  query(
     "UPDATE customers SET email = ?, name = ?, active = ? WHERE id = ?",
     [customer.email, customer.name, customer.active, id],
     (err, res) => {
@@ -75,7 +75,7 @@ Customer.updateById = (id, customer, result) => {
 };
 
 Customer.remove = (id, result) => {
-  sql.query("DELETE FROM customers WHERE id = ?", id, (err, res) => {
+  query("DELETE FROM customers WHERE id = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -94,7 +94,7 @@ Customer.remove = (id, result) => {
 };
 
 Customer.removeAll = result => {
-  sql.query("DELETE FROM customers", (err, res) => {
+  query("DELETE FROM customers", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -106,4 +106,4 @@ Customer.removeAll = result => {
   });
 };
 
-module.exports = Customer;
+export default Customer;
